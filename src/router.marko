@@ -1,3 +1,4 @@
+import getRenderer from "../../../lazy-pages.js";
 class {
   onCreate(){
     this.state = {
@@ -6,13 +7,25 @@ class {
     }
   }
   onMount(){
-    //todo: 1. listen to clicks
-    //      2. decide if we can render them without a refresh
-    //      3. feed them into loadNewContent
+    document.addEventListener(`click`, async(e) => {
+        const origin = e.target.closest(`a`);
+        if (origin) {
+            e.preventDefault();
+            const href = origin.href;
+            if(!href.startsWith(window.location.protocol + "//" + window.location.host)) window.location = href; //fast-exiting absolute links (assumed to be off-site)
+            else{
+                const response = await fetch(href + ".json");
+                if(!response.ok) window.location = href; //fastish-exiting when we dont have a json representation of the requested page.
+                
+                const newPage = await response.json();
+                this.loadNewContent(newPage.renderer,newPage.model)
+            }
+        }
+    });
   }
   async loadNewContent(renderer,model){
-    let newRenderer = await renderer();
-    let newModel = await model();
+    let newRenderer = await getRenderer(renderer);
+    let newModel = model;
     this.state.model = newModel;
     this.state.contentRenderer = newRenderer;
   }
