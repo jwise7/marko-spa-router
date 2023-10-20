@@ -1,0 +1,23 @@
+class {
+  onCreate(){
+    this.state = {
+      contentRenderer:null,
+      model:null
+    }
+  }
+  onMount(){
+    //todo: 1. listen to clicks
+    //      2. decide if we can render them without a refresh
+    //      3. feed them into loadNewContent
+  }
+  async loadNewContent(renderer,model){
+    let newRenderer = await renderer();
+    let newModel = await model();
+    this.state.model = newModel;
+    this.state.contentRenderer = newRenderer;
+  }
+}
+if(state.contentRenderer==null)
+  ${input.renderBody}
+else
+  ${state.contentRenderer} ...state.model

@@ -1,0 +1,19 @@
+{
+    "name": "marko-spa-router",
+    "version": "0.0.1",
+    "description": "Marko based spa routing",
+    "keywords": [
+        "marko",
+        "marko-widgets",
+        "components"
+    ],
+    "author": {
+        "name": "Jesse Wise"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jwise7/marko-spa-router"
+    },
+    "type":"module"
+}
